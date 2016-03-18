@@ -1,0 +1,11 @@
+{
+  "name": "vair_seven_reconciliation",
+  "version": "1.0.0",
+  "description": "小七轉檔對帳單轉檔程式",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "William Chen",
+  "license": "ISC"
+}

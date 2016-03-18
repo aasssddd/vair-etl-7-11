@@ -15,7 +15,7 @@ fs = require 'fs'
 logger = getLogger(config.logger.LEVEL, {file: config.logger.FILE})
 
 # set initial param
-dataTime = moment().add -10, 'day'
+dataTime = moment().add -1, 'day'
 ftpFilePath =  "#{config.seven.FILE_PATH}/#{dataTime.format "MM"}/#{config.seven.FILE_NAME_PREFIX}.#{dataTime.format 'YYYYMMDD'}"
 
 # get data from Seven ftp

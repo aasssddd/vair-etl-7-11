@@ -1,0 +1,12 @@
+// seven.js
+
+module.exports = {
+	FTP_HOST: "61.57.227.171",
+	PORT: 22,
+	ACCOUNT: "vair",
+	PASSWORD: "20RbWxgc",
+	FILE_PATH: "EE00",
+	FILE_NAME_PREFIX: "OLEE00",
+	RETRY_COUNT: 5,
+	RETRY_INTERVAL: 60000
+}

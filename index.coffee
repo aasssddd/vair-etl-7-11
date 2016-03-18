@@ -32,11 +32,17 @@ conn.on 'ready', () ->
 		else 
 			logger.info "start reading data from #{ftpFilePath}"
 			rStream = LineInputStream sftp.createReadStream(ftpFilePath, flags: "r")
+			rStream.on 'error', (err) ->
+				logger.warn "read file error: #{err}"
 			reconcil_obj = new Reconciliation()
 			rStream.setDelimiter "\r\n"
 			rStream.on 'close', () ->
 				logger.info "data is\n#{JSON.stringify reconcil_obj, null, 4}"
 				conn.end()
+
+				if reconcil_obj.data.length == 0
+					logger.warn "no data, bye"
+					return 
 
 				writer = csv {sendHeaders: false, headers: [
 					'charge_date', 'collect_store_no', 'pos_no', 'payment_date', 'tx_no', 'tx_time', 'barcode1', 'barcode2', 'barcode3', 'diff_flag'

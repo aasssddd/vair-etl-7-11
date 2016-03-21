@@ -12,7 +12,7 @@ csv = require 'csv-write-stream'
 fs = require 'fs'
 
 # create logger
-logger = getLogger(config.logger.LEVEL, {file: config.logger.FILE})
+logger = getLogger(config.logger.LEVEL, {file: config.logger.FILE, path: config.logger.PATH})
 
 # set initial param
 dataTime = moment().add -1, 'day'

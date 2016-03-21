@@ -1,5 +1,6 @@
 // logger.js
 module.exports = {
 	LEVEL: "info",
-	FILE: "info.log"
+	FILE: "info.log",
+	PATH: "log"
 }

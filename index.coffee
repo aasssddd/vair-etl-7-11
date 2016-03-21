@@ -47,7 +47,8 @@ conn.on 'ready', () ->
 				writer = csv {sendHeaders: false, headers: [
 					'charge_date', 'collect_store_no', 'pos_no', 'payment_date', 'tx_no', 'tx_time', 'barcode1', 'barcode2', 'barcode3', 'diff_flag'
 				]}
-				file_name = "#{reconcil_obj.start.charge_date}.csv"
+				log_file_name = "#{reconcil_obj.start.charge_date}.csv"
+				file_name = config.s3.MAIN_FILE_NAME
 				writer.pipe(fs.createWriteStream file_name)
 				writer.on 'finish', () ->
 					logger.info "write file finish"
@@ -63,6 +64,15 @@ conn.on 'ready', () ->
 								logger.error "upload to S3 fail! #{err}"
 							else
 								logger.info "upload successful"
+								# copy file as backup with name yyyymmdd.csv
+								s3obj.copyObject {
+									CopySource: config.s3.BUCKET + '/' + file_name, 
+									Key: log_file_name,
+									Bucket: config.s3.BUCKET
+								}, (err, data) ->
+									if err?
+										logger.error "copy data fail: \n#{err}"
+
 								# kill temp csv file
 								fs.unlink file_name, (err) ->
 									if err?

@@ -1,6 +1,4 @@
 # index.coffee
-
-config = require 'app-config'
 AWS = require 'aws-sdk'
 Client = require('ssh2').Client
 getLogger = require 'vair_log'
@@ -11,7 +9,14 @@ LineInputStream = require 'line-input-stream'
 csv = require 'csv-write-stream'
 fs = require 'fs'
 
+
+# exports.handler = () ->
 # create logger
+if not process.env.NODE_ENV?
+	process.env.NODE_ENV = "prod"
+
+config = require 'app-config'
+
 logger = getLogger(config.logger.LEVEL, {file: config.logger.FILE, path: config.logger.PATH})
 
 # set initial param
@@ -114,5 +119,3 @@ conn.connect {
 	username: config.seven.ACCOUNT,
 	password: config.seven.PASSWORD
 }
-
-

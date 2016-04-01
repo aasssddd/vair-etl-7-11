@@ -9,8 +9,6 @@ LineInputStream = require 'line-input-stream'
 csv = require 'csv-write-stream'
 fs = require 'fs'
 
-
-# exports.handler = () ->
 # create logger
 if not process.env.NODE_ENV?
 	process.env.NODE_ENV = "prod"
@@ -57,7 +55,11 @@ conn.on 'ready', () ->
 				writer.pipe(fs.createWriteStream file_name)
 				writer.on 'finish', () ->
 					logger.info "write file finish"
-					AWS.config.loadFromPath = config.s3.AWS_CONFIG
+					# AWS.config.l、oadFromPath = path.resolve config.s3.AWS_CONFIG
+					AWS.config.update {
+							accessKeyId: config.s3.ACCESS_KEY_ID,
+							secretAccessKey: config.s3.SECRET_ACCESS_KEY
+					}
 					s3obj = new AWS.S3 {endpoint: "s3-us-west-2.amazonaws.com"}
 					csvData = fs.createReadStream(file_name)
 					csvData.on 'error', (err) ->
